@@ -15,13 +15,14 @@ def verifica_ganhador():
     for jogador in ["X", "O"]:
         for a, b, c in vencedores:
             if tabuleiro[a] == tabuleiro[b] == tabuleiro[c] == jogador:
-                print(jogador + " venceu!")
+                print(f"O jogador {jogador} venceu!")
                 return True
     return False
 
 # Define a função principal do jogo
 def jogar_jogo():
     jogador = "X"
+    jogadas = 0
     while True:
         imprime_tabuleiro()
         escolha = input("É a vez do jogador " + jogador + ". Escolha uma posição (de 1 a 9): ")
@@ -30,7 +31,12 @@ def jogar_jogo():
             if escolha >= 1 and escolha <= 9:
                 if tabuleiro[escolha - 1] == " ":
                     tabuleiro[escolha - 1] = jogador
+                    jogadas += 1
                     if verifica_ganhador():
+                        imprime_tabuleiro()
+                        return
+                    elif jogadas == 9:
+                        print("Deu velha!")
                         imprime_tabuleiro()
                         return
                     jogador = "O" if jogador == "X" else "X"
